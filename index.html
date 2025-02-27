@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustStreamIt</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <img src="img/logo_dark.png" alt="JustStreamIt" class="logo">
+            <span class="nav-title">Vidéos à la demande</span>
+        </div>
+    </nav>
+
+    <!-- Meilleur film -->
+    <header id="best-movie">
+        <div class="movie-info">
+            <!-- Contenu ajouté dynamiquement -->
+        </div>
+    </header>
+
+    <main>
+        <!-- Films les mieux notés -->
+        <section class="category">
+            <h2>Films les mieux notés</h2>
+            <div class="movies" id="top-rated">
+                <!-- Films ajoutés dynamiquement -->
+            </div>
+            <button class="show-more">Voir plus</button>
+        </section>
+
+        <!-- Films d'action -->
+        <section class="category">
+            <h2>Films d'action</h2>
+            <div class="movies" id="action">
+                <!-- Films ajoutés dynamiquement -->
+            </div>
+            <button class="show-more">Voir plus</button>
+        </section>
+
+        <!-- Films de comédie -->
+        <section class="category">
+            <h2>Films de comédie</h2>
+            <div class="movies" id="comedy">
+                <!-- Films ajoutés dynamiquement -->
+            </div>
+            <button class="show-more">Voir plus</button>
+        </section>
+
+        <!-- Catégorie personnalisée -->
+        <section class="category">
+            <div class="category-header">
+                <h2>Films par catégorie</h2>
+                <select id="category-select">
+                    <option value="">Choisir une catégorie</option>
+                </select>
+            </div>
+            <div class="movies" id="custom-category">
+                <!-- Films ajoutés dynamiquement -->
+            </div>
+            <button class="show-more">Voir plus</button>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-body">
+                <!-- Contenu ajouté dynamiquement -->
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html> 

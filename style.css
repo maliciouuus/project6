@@ -1,0 +1,357 @@
+/* Les couleurs - copié de Netflix mais en moins bien lol */
+:root {
+    --primary: #e50914;  /* le rouge qui pique les yeux */
+    --dark: #141414;     /* presque noir mais pas tout à fait */
+    --light: #fff;
+    --grey: #aaa;
+    --spacing: 15px;     /* pour pas répéter les px partout */
+    --shadow-light: rgba(0, 0, 0, 0.3);
+    --shadow-dark: rgba(0, 0, 0, 0.5);
+    --modal-bg: rgba(0, 0, 0, 0.85);
+    --main-width: 1200px;
+    --transition-speed: 0.3s;
+}
+
+/* Reset rapide */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;  /* toujours oublier celui-là */
+}
+
+/* Base */
+body {
+    font-family: Arial, sans-serif;  /* à changer plus tard */
+    background: var(--dark);
+    color: var(--light);
+}
+
+/* La navbar - position fixed pour qu'elle bouge pas */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: var(--spacing);
+    background: var(--dark);
+    z-index: 99;  /* jsp pourquoi mais ça marche */
+}
+
+.nav-content {
+    max-width: 1180px;  /* un peu moins que 1200 */
+    margin: auto;
+    padding: 0 var(--spacing);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing);
+}
+
+.logo {
+    height: 40px;
+}
+
+.nav-title {
+    color: var(--light);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Le gros header qui prend toute la place */
+header {
+    min-height: 75vh;
+    padding: calc(var(--spacing) * 5) var(--spacing) var(--spacing);
+    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.65)), 
+        var(--movie-background, url('img/pexels-cottonbro-9665187.jpg')) center/cover;
+    display: flex;
+    align-items: center;
+}
+
+/* La carte du film principal */
+.movie-info {
+    max-width: 580px;  /* bizarrement 600 c'était trop */
+    margin: auto;
+    padding: calc(var(--spacing) * 2);
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
+}
+
+.movie-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.movie-info .meta {
+    color: var(--grey);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.movie-info .description {
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Sections de films */
+main {
+    max-width: var(--main-width);
+    margin: 0 auto;
+    padding: var(--spacing) * 2;
+}
+
+.category {
+    margin-bottom: 3rem;
+}
+
+.category h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Les grilles de films - galère le responsive */ 
+.movies {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(6, 1fr); /* 6 films sur PC */
+}
+
+/* Les cartes de films (effet hover chopé sur codepen) */
+.movie-card {
+    position: relative;
+    aspect-ratio: 0.667;  /* pareil que 2/3 mais en plus précis */
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px var(--shadow-light);
+}
+
+.movie-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 5px 15px var(--shadow-dark);
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Le bouton voir plus - à cacher/afficher en JS */
+.show-more {
+    display: none; /* caché par défaut sur PC */
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: none;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.show-more:hover {
+    background-color: var(--primary);
+    color: var(--light);
+}
+
+/* Le select qui marche pas sur Safari :( */
+select {
+    padding: calc(var(--spacing) - 3px);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--grey);
+    color: var(--light);
+    border-radius: 6px;
+    font-size: 16px;
+    min-width: 200px;
+}
+
+option {
+    background-color: var(--dark);
+    padding: 0.5rem;
+}
+
+/* La modal - à revoir complètement */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--modal-bg);
+    z-index: 999;
+    padding: var(--spacing);
+    backdrop-filter: blur(2px);  /* ça rend bien je trouve */
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background-color: var(--dark);
+    padding: 2rem;
+    border-radius: 8px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--light);
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.close-modal:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.movie-details {
+    display: grid;
+    grid-template-columns: minmax(250px, 300px) 1fr;
+    gap: 32px;
+}
+
+.movie-details img {
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive tablette - 4 films visibles */
+@media (max-width: 1024px) {
+    .movies {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    /* Masquer les films au-delà du 4ème */
+    .movie-card:nth-child(n+5) {
+        display: none;
+    }
+
+    /* Toujours afficher le bouton sur tablette */
+    .show-more {
+        display: block !important;
+    }
+
+    /* Afficher tous les films quand expanded */
+    .movies.expanded .movie-card {
+        display: block;
+    }
+
+    /* Cacher le bouton quand expanded */
+    .movies.expanded + .show-more {
+        display: none !important;
+    }
+
+    .movie-details img {
+        max-width: var(--spacing) * 18;
+        margin: 0 auto;
+    }
+
+    .movie-info {
+        max-width: 500px;
+        padding: 1.5rem;
+    }
+
+    .movie-info h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Mobile - 2 films visibles */
+@media (max-width: 480px) {
+    .movies {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Masquer les films au-delà du 2ème */
+    .movie-card:nth-child(n+3) {
+        display: none;
+    }
+
+    /* Toujours afficher le bouton sur mobile */
+    .show-more {
+        display: block !important;
+    }
+
+    /* Afficher tous les films quand expanded */
+    .movies.expanded .movie-card {
+        display: block;
+    }
+
+    /* Cacher le bouton quand expanded */
+    .movies.expanded + .show-more {
+        display: none !important;
+    }
+
+    header {
+        min-height: 55vh;
+        padding: calc(var(--spacing) * 4) var(--spacing) var(--spacing);
+    }
+
+    .movie-info {
+        max-width: 100%;
+        padding: 1rem;
+    }
+
+    .movie-info h1 {
+        font-size: 1.75rem;
+    }
+
+    .movie-info .description {
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    .category-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+}
